@@ -1,5 +1,7 @@
 package com.mintic.tiendafront.controlador;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,13 +9,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mintic.tiendafront.cliente.IClienteTienda;
+import com.mintic.tiendafront.cliente.IProductosTienda;
+//import com.mintic.tiendafront.cliente.IProductosTienda;
 import com.mintic.tiendafront.modelo.LoginDto;
+//import com.mintic.tiendafront.modelo.Productos;
+import com.mintic.tiendafront.modelo.Productos;
 
 @Controller
 public class AppControlador {
 
 	@Autowired
 	IClienteTienda clienteTienda;
+	
+	@Autowired
+	IProductosTienda productosTienda;
 	
 	@GetMapping("/")
 	public String index() {
@@ -40,6 +49,9 @@ public class AppControlador {
 	
 	@GetMapping("/productos")
 	public String productos() {
+		System.out.println("APPControler");
+		List<Productos> prod = productosTienda.productos();
+		System.out.println(prod);
 		return "productos";
 	}
 	
