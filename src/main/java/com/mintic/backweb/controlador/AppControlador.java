@@ -1,5 +1,7 @@
 package com.mintic.backweb.controlador;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,7 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mintic.backweb.modelo.LoginDto;
 import com.mintic.backweb.repositorio.ITipoDocumento;
+import com.mintic.backweb.servicio.IProductosService;
 import com.mintic.backweb.servicio.IUsuarioService;
+
+
+
+
+
 
 @RestController
 public class AppControlador {
@@ -17,11 +25,15 @@ public class AppControlador {
 	/*
 	 * inyectamos el la iterface del servicio para acceder a los metodos del negocio
 	 **/
+	
 	@Autowired
 	IUsuarioService iUsuario;
 	
 	@Autowired
 	ITipoDocumento iTipoDocumento;
+	
+	@Autowired
+	IProductosService iProductos;
 
 	/*
 	 * @CrossOrigin indica desde que sitios se van a realizar peticiones
@@ -37,6 +49,15 @@ public class AppControlador {
 	public ResponseEntity<?> loginCliente(@RequestBody LoginDto usuario) {
 		return iUsuario.ingresar(usuario);
 	}
+	
+	@PostMapping("/productos") // ruta del servicio desde el front deben direccionar a esta ruta
+	public ResponseEntity<?> Productsview() {
+		System.out.println("In backend controller");
+		ResponseEntity<?> listaProductos = iProductos.listar_P();
+		
+		return listaProductos;
+	}
+	
 	
 
 }
