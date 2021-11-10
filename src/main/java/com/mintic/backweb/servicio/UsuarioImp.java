@@ -1,6 +1,7 @@
 package com.mintic.backweb.servicio;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.mintic.backweb.modelo.LoginDto;
+import com.mintic.backweb.modelo.TipoDocumento;
 import com.mintic.backweb.modelo.Usuario;
+import com.mintic.backweb.modelo.UsuarioDTO;
 import com.mintic.backweb.repositorio.IUsuario;
 /*
  * Implementamos la interface con sus metodos
@@ -57,6 +60,47 @@ public class UsuarioImp implements IUsuarioService {
 			 response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
 			 return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@Override
+	public List<Usuario> getUsuarios() {
+		return (List<Usuario>) iUsuario.findAll();
+	}
+
+	@Override
+	public Usuario nuevoUsuario(UsuarioDTO usuarioDto) {
+		Usuario usuario = new Usuario();
+		TipoDocumento td = new TipoDocumento();
+		td.setId(usuarioDto.getIdTipoDocumento());
+		
+		if (usuarioDto.getId()!=null) {
+			usuario.setId(usuarioDto.getId());
+		}
+		
+		usuario.setIdTipoDocumento(td);
+		usuario.setNumeroDocumento(usuarioDto.getNumeroDocumento());
+		usuario.setNombre(usuarioDto.getNombre());
+		usuario.setNombreUsuario(usuarioDto.getNombreUsuario());
+		usuario.setPassword(usuarioDto.getPassword());
+		usuario.setEmail(usuarioDto.getEmail());
+		return iUsuario.save(usuario);
+	}
+
+	@Override
+	public Usuario buscarUsuario(Long id) {
+		Usuario usuario = null;
+		usuario = iUsuario.findById(id).orElse(null);
+		if (usuario == null) {
+			return null;
+		}
+		
+		return usuario;
+	}
+
+	@Override
+	public int borrarUsuario(Long id) {
+		iUsuario.deleteById(id);
+		return 1;
 	}
 
 }
