@@ -19,8 +19,8 @@ public class ProductoServicio {
 	@Autowired
 	private ProductoRepositorio repo;
 	
-	public ResponseEntity<?> listar(){
-		return (ResponseEntity<?>) repo.findAll();
+	public List<Productos> listar(){
+		return repo.findAll();
 	}
 	
 	public Productos listarId(int id) {

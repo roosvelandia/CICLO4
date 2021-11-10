@@ -5,14 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mintic.backweb.modelo.LoginDto;
+import com.mintic.backweb.modelo.Productos;
 import com.mintic.backweb.repositorio.ITipoDocumento;
 import com.mintic.backweb.servicio.IProductosService;
 import com.mintic.backweb.servicio.IUsuarioService;
+
+import com.mintic.backweb.servicio.ProductoServicio;
 
 
 
@@ -34,6 +38,9 @@ public class AppControlador {
 	
 	@Autowired
 	IProductosService iProductos;
+	
+	@Autowired
+	private ProductoServicio servicio;
 
 	/*
 	 * @CrossOrigin indica desde que sitios se van a realizar peticiones
@@ -50,11 +57,16 @@ public class AppControlador {
 		return iUsuario.ingresar(usuario);
 	}
 	
-	@PostMapping("/productos") // ruta del servicio desde el front deben direccionar a esta ruta
-	public ResponseEntity<?> Productsview() {
-		System.out.println("In backend controller");
-		ResponseEntity<?> listaProductos = iProductos.listar_P();
-		
+	//@PostMapping("/productos") // ruta del servicio desde el front deben direccionar a esta ruta
+	//public ResponseEntity<?> Productsview() {
+		//ResponseEntity<?> listaProductos = iProductos.listar_P();
+		//System.out.println(listaProductos);
+		//return iProductos.listar_P();
+	//}
+	@GetMapping("/productos") // ruta del servicio desde el front deben direccionar a esta ruta
+	public List<Productos> Productsview() {
+		List<Productos> listaProductos = servicio.listar();
+		System.out.println(listaProductos);
 		return listaProductos;
 	}
 	

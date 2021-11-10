@@ -33,13 +33,10 @@ public class ProductosImp implements IProductosService {
 
 	@Override
 	public ResponseEntity<?> listar_P() {
-		System.out.println("In backend service");
 		Map<String, Object> response = new HashMap<>();
-		Productos prods = null;	
+		List<Productos> prods = null;	
 		try {
-			System.out.println("In backend service2");
 			prods = iProductos.findProductos();
-			System.out.println("In backend service3" + prods);
 			 if (prods ==null) {
 				 response.put("Productos", null);
 				 response.put("Mensaje", "Alerta:No hay productos");
@@ -47,7 +44,7 @@ public class ProductosImp implements IProductosService {
 				 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 		 	
 			 }else {
-				 response.put("Usuario", prods);
+				 response.put("Productos", prods);
 				 response.put("Mensaje", "Productos listados");
 				 response.put("statusCode", HttpStatus.OK.value());
 				 return new ResponseEntity<>(response, HttpStatus.OK);

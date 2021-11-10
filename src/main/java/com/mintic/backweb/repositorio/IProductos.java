@@ -18,7 +18,7 @@ import com.mintic.backweb.modelo.Productos;
 public interface IProductos extends CrudRepository<Productos, Long>{
 	
 	// JPQL: Se hace la consulta sobre la clase 
-	@Query("select p from Productos as p where codigo = 1")
-	Productos findProductos();
+	@Query("select p from Productos as p")
+	List<Productos> findProductos();
 
 }
