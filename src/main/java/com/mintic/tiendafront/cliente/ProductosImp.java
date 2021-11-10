@@ -23,30 +23,23 @@ public class ProductosImp implements IProductosTienda {
 	@Autowired
 	private WebClient.Builder webClient;
 	
-	List<Productos> empty;
+	List<Productos> empt;
 	@Override
 	public List<Productos> productos() {
-		System.out.println("after sending1");
+		
 		try {
 			/*
 			 * aqui nos conectamos al back  directamente al controlador donde estan las rutas 
 			 * el back espera recibir un dto  por eso enviamos el dto login dto
 			  * */
-			System.out.println("after sending2");
-			
-			Mono<Productos> response = webClient.build().post().uri(URL + "/productos")
-				.accept(MediaType.APPLICATION_JSON).body(Mono.justOrEmpty(null), Productos.class).retrieve()
-					.bodyToMono(Productos.class);
-			//Aqui se captura la respuesta del back 
-			
-			System.out.println(response.block());
-			
-			return (List<Productos>) response.block();
+			Mono<List> response2 = webClient.build().get().uri(URL + "/productos").retrieve()
+					.bodyToMono(List.class);
+			return response2.block();
 
 		} catch (WebClientResponseException e) {
 			e.getMessage();
 			System.out.println("---->" + e.getMessage());
-			return empty;
+			return empt;
 		}
 	}
 

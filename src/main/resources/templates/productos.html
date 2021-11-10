@@ -34,6 +34,16 @@
                             <th>IVA</th>
                             <th>PRECIO VENTA</th>
                     </thead>
+                    <tbody>
+					<tr th:each="producto : ${listaProductos}">
+						<td th:text="${producto.codigo}"></td>
+						<td th:text="${producto.nombre}"></td>
+						<td th:text="${producto.nitproveedor}"></td>
+						<td th:text="${producto.precio_compra}"></td>
+						<td th:text="${producto.iva}"></td>
+						<td th:text="${producto.precio_venta}"></td>
+				</tr>
+			</tbody>
                     <!--tbody>
                         <c:forEach var="e" items="${productos}">
                             <tr>

@@ -48,10 +48,9 @@ public class AppControlador {
 	}
 	
 	@GetMapping("/productos")
-	public String productos() {
-		System.out.println("APPControler");
-		List<Productos> prod = productosTienda.productos();
-		System.out.println(prod);
+	public String productos(Model model) {
+		List<Productos> listaProductos = productosTienda.productos();
+		model.addAttribute("listaProductos", listaProductos);
 		return "productos";
 	}
 	

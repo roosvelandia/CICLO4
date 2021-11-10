@@ -30,6 +30,7 @@ public class ClienteImp implements IClienteTienda {
 			Mono<Integer> response = webClient.build().post().uri(URL + "/loginclient")
 					.accept(MediaType.APPLICATION_JSON).body(Mono.just(loginDto), LoginDto.class).retrieve()
 					.bodyToMono(Integer.class);
+			System.out.println(response);
 
 			//Aqui se captura la respuesta del back 
 			return response.block();
