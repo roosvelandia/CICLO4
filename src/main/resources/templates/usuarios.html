@@ -1,0 +1,149 @@
+
+<html xmlns="https://www.thymeleaf.org">
+    <head>
+    <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Página de Usuarios</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" crossorigin="anonymous">
+    </head>
+    <body style="font-family: arial;">
+        <div class="d-flex"> 
+            <div class="card col-sm-4">
+                <div class="card-body">
+                    <form class="needs-validation" th:action="@{/usuarios}" method="POST" th:object="${usuarioEditar}">
+                        <div class="form-group m-3" >
+                            <label>Numero</label >
+                                <input  type="text" name="id" id = "id" th:field="*{id}"
+                                        class="form-control" >         
+                        </div>
+                        <div class="form-group m-3" >
+                            <label>Numero documento</label>
+                                <input  type="text" name="numeroDocumento" value="" class="form-control" th:field="*{numeroDocumento}">
+                                <div class="valid-feedback">Campo OK</div>
+                                <div class="invalid-feedback">Complete los datos</div>
+                        </div>
+                        <div class="form-group m-3" >
+                            <label>Correo</label>
+                            <input  type="text" name="email" th:field="*{email}"
+                                    class="form-control">
+                            <div class="valid-feedback">Campo OK</div>
+                            <div class="invalid-feedback">Complete los datos</div>
+                        </div>
+                        
+                        <div class="form-group m-3" >
+                            <label>Nombre </label>
+                            <input  type="text" name="nombre" th:field="*{nombre}"
+                                    class="form-control">
+                            <div class="valid-feedback">Campo OK</div>
+                            <div class="invalid-feedback">Complete los datos</div>
+                        </div>
+                        <div class="form-group m-3" >
+                            <label>Nombre Usuario </label>
+                            <input  type="text" name="nombreUsuario" th:field="*{nombreUsuario}"
+                                    class="form-control">
+                            <div class="valid-feedback">Campo OK</div>
+                            <div class="invalid-feedback">Complete los datos</div>
+                        </div>
+                        
+                        
+                        <div class="form-group m-3" >
+                            <label>Clave</label>
+                            <input  type="password" name="password" th:field="*{password}"
+                                    class="form-control">
+                            <div class="valid-feedback">Campo OK</div>
+                            <div class="invalid-feedback">Complete los datos</div>
+                        </div>
+                        
+                        <div class="form-group m-3" >
+                            <label>Tipo Documento</label>
+                            <select class="form-control" name="idTipoDocumento" th:values="${usuarioEditar.idTipoDocumento}">
+                            	<option value = 0> Seleccionar</option >
+                            	<option th:each= "tipos: ${tipoDocumento}" th:text= "${tipos.tipo}" th:value= "${tipos.id}"
+                            	th:attr="selected=${tipos.id==usuarioEditar.idtipoDocumento?true:false}"></option>
+                               <option value = 1>Cedula</option >
+                            </select>
+                            <div class="valid-feedback">Campo OK</div>
+                            <div class="invalid-feedback">Complete los datos</div>
+                        </div>
+                        <input type="submit" value="Agregar" class="btn btn-success m-3" style="background-color: #26A69A;" >
+                  
+                        
+                    </form>   
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NUMERO DOCUMENTO</th>
+                            <th>CORREO</th>
+                            <th>NOMBRE</th>
+                            <th>NOMBRE USUARIO</th>
+                            <th>CLAVE</th>
+                            <th>ACCIONES</th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="usuario : ${usuarios}">
+						<td th:text="${usuario.id}"></td>
+						<td th:text="${usuario.numeroDocumento}"></td>
+						<td th:text="${usuario.email}"></td>
+						<td th:text="${usuario.nombre}"></td>
+						<td th:text="${usuario.nombreUsuario}"></td>
+						<td th:text="${usuario.password}"></td>
+						<td>
+                                <a th:href="@{'/usuario/' + ${usuario.id}}" 
+                                   class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                <a th:href="@{'/eliminarusuario/' + ${usuario.id}}" 
+                                   class="btn btn-danger btn-sm" onclick="return confirmarAccesoURL()"><i class="fa fa-trash-alt"></i></a>
+                                    <!-- Modal -->
+                        </td>
+						</tr>
+                    <tbody>
+                </table>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" 
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" 
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" 
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" 
+        crossorigin="anonymous"></script>
+        <script>
+            //Cuadro de diálogo de confirmación en JavaScript
+          function confirmarAccesoURL()
+          {
+	    return confirm("¿Está seguro que desea eliminar?");
+          }
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+        }, false)
+        })
+        })()
+    </script>
+    </body>
+</html>
