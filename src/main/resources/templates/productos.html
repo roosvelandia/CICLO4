@@ -24,13 +24,21 @@
     <body style="font-family: arial;">
         <div class="d-flex"> 
             <div class="card col-sm-4">
-                    <form action="/load" method = "post" class="form-control-static">
-                        <input type = "file" name="nombre" accept=".csv"
-                               class="custom-file-input" size ="50" id="fileUpload" >
+            <form method="post" th:action="@{/productos}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" name="file" class="form-control-file">
+                        
+                    <input type="submit" name="accion" value="Cargar" class="btn btn-primary btn-lg"><br/>
+                    </div>
+                    
+                    
+                </form>
+                    <!--form th:action="@{'/productos/'+ ${fileUpload}}" method="POST" class="form-control-static">
+                        <input type = "file" th:name="#{fileUpload}" accept=".csv"  th:value="${fileUpload}"
+                               class="custom-file-input" size ="50" th:id="*{fileUpload}"-->
+         
             </div>
-                        <br/>
-                        <input type="submit" name="accion" value="Cargar" class="btn btn-primary btn-lg"><br/>      
-                    </form>                     
+                             
             </div>
             <div class="col-sm-8">
                 <table border="0" cellspacing="5" cellpading="5"class=" table table-striped">
@@ -53,18 +61,6 @@
 						<td th:text="${producto.precio_venta}"></td>
 				</tr>
 			</tbody>
-                    <!--tbody>
-                        <c:forEach var="e" items="${productos}">
-                            <tr>
-                                <td>${e.codigo}</td>
-                                <td>${e.nombre}</td>
-                                <td>${e.nitproveedor}</td>
-                                <td>${e.precio_compra}</td>
-                                <td>${e.iva}</td>
-                                <td>${e.precio_venta}</td>
-                            </tr>
-                        </c:forEach>
-                    </!--tbody-->
                 </table>
             </div>
         </div>
@@ -75,9 +71,9 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" 
         crossorigin="anonymous"></script>
         <script>
-             /*$('#fileUpload').on('change',function(e){
+             ('#fileUpload').on('change',function(e){
                 //get the file name
-                //var fileName = e.target.files[0];
+                var fileName = e.target.files[0];
                 fileName = $(this).val();
                 //replace the "Choose a file" label
                 $(this).next('.custom-file-label').html(fileName);
@@ -87,11 +83,10 @@
         var filename = fullPath;
         console.log(filename);
         
-         //console.log(document.getElementById('fileUpload').value);
-         //document.getElementById('fileUpload').value = "C/file.csv";
+         console.log(document.getElementById('fileUpload').value);
+         document.getElementById('fileUpload').value = "C/file.csv";
          return fullPath;
-}
-    */    
+}  
     // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
         'use strict'

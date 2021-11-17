@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import com.mintic.tiendafront.modelo.Files;
 import com.mintic.tiendafront.modelo.LoginDto;
 import com.mintic.tiendafront.modelo.Productos;
 
@@ -40,6 +41,20 @@ public class ProductosImp implements IProductosTienda {
 			e.getMessage();
 			System.out.println("---->" + e.getMessage());
 			return empt;
+		}
+	}
+	@Override
+	public int cargar(Files file) {
+		try {
+			Mono<Integer> response = webClient.build().post().uri(URL + "/productos")
+					.accept(MediaType.APPLICATION_JSON).body(Mono.just(file), Files.class).retrieve()
+					.bodyToMono(Integer.class);
+			System.out.println(response);
+			return response.block();
+		} catch(WebClientResponseException e) {
+			e.getMessage();
+			System.out.println("----->" + e.getMessage());
+			return 0;
 		}
 	}
 
