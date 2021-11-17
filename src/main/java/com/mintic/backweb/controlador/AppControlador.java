@@ -1,5 +1,6 @@
 package com.mintic.backweb.controlador;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mintic.backweb.modelo.Files;
+import com.mintic.backweb.modelo.LectorCSV;
 import com.mintic.backweb.modelo.LoginDto;
 import com.mintic.backweb.modelo.Productos;
 import com.mintic.backweb.modelo.TipoDocumento;
@@ -65,6 +68,7 @@ public class AppControlador {
 		return listaProductos;
 	}
 	
+	
 	@PostMapping("/usuarios") // ruta del servicio desde el front deben direccionar a esta ruta
 	public Usuario usuarios(@RequestBody UsuarioDTO usuarioDto) {
 		System.out.println("en controlador");
@@ -79,6 +83,17 @@ public class AppControlador {
 	@GetMapping("/usuarios/{id}") // ruta del servicio desde el front deben direccionar a esta ruta
 	public Usuario  buscarUsuarioId(@PathVariable Long id) {
 		return iUsuario.buscarUsuario(id);
+	}
+	
+	@PostMapping("/productos") // ruta del servicio desde el front deben direccionar a esta ruta
+	public int  cargarProductos(@RequestBody Files file) throws IOException {
+		LectorCSV lectorCSV = new LectorCSV(',',' ');
+		List<Productos> productos = lectorCSV.LeerCSVSimple(file.getFilepath());
+		for (Productos producto :productos) {
+			System.out.println(producto);
+			servicio.save(producto);
+		}
+		return 0;
 	}
 	
 	@DeleteMapping("/usuarios/{id}") // ruta del servicio desde el front deben direccionar a esta ruta
