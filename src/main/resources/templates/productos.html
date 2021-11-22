@@ -40,6 +40,18 @@
             </div>
                              
             </div>
+            <div th:if="${resultado==1}" class="col-sm-4" style="background-color: green;border:2px;">
+            	<h3>Archivo cargado correctamente</h3>
+            </div >
+            <div th:if="${resultado==0}" class="col-sm-4" style="background-color: red;border:2px;">
+            	<h>Error: datos leídos inválidos”.</h3>
+            </div >
+            <div th:if="${resultado==2}" class="col-sm-4" style="background-color: red;border:2px;">
+            	<h3> Error: no se seleccionó archivo para cargar.</h3>
+            </div >
+            <div th:if="${resultado==3}" class="col-sm-4" style="background-color: red;border:2px;">
+            	<h3> Error: formato de archivo inválido</h3>
+            </div >
             <div class="col-sm-8">
                 <table border="0" cellspacing="5" cellpading="5"class=" table table-striped">
                     <thead>

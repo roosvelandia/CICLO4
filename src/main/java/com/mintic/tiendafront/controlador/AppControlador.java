@@ -101,6 +101,7 @@ public class AppControlador {
 		int resultado = productosTienda.cargar(files);
 		List<Productos> listaProductos = productosTienda.productos();
 		model.addAttribute("listaProductos", listaProductos);
+		model.addAttribute("resultado", resultado);
 		return "productos";
     }
 
