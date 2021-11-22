@@ -22,7 +22,6 @@ import com.mintic.backweb.modelo.Usuario;
 import com.mintic.backweb.modelo.UsuarioDTO;
 import com.mintic.backweb.repositorio.ITipoDocumento;
 import com.mintic.backweb.servicio.IUsuarioService;
-
 import com.mintic.backweb.servicio.ProductoServicio;
 
 
@@ -86,14 +85,31 @@ public class AppControlador {
 	}
 	
 	@PostMapping("/productos") // ruta del servicio desde el front deben direccionar a esta ruta
-	public int  cargarProductos(@RequestBody Files file) throws IOException {
+	public int  cargarProductos(@RequestBody Files file) throws IOException ,NumberFormatException{
 		LectorCSV lectorCSV = new LectorCSV(',',' ');
-		List<Productos> productos = lectorCSV.LeerCSVSimple(file.getFilepath());
-		for (Productos producto :productos) {
-			System.out.println(producto);
-			servicio.save(producto);
+		
+		try {
+			String archivo=file.getFilepath();
+			if (!archivo.contains(".csv") && !archivo.equals("")) {
+				return 3;
+			}
+			System.out.println("Nombre archivo: " + archivo);
+			List<Productos> productos = lectorCSV.LeerCSVSimple(archivo);		
+			for (Productos producto :productos) {
+				System.out.println(producto);
+				servicio.save(producto);
+			}
+			return 1; //cargue exitoso
+		
+		} catch (IOException ioe){
+        	System.out.println("catch lectura archivo: "+ ioe.toString());
+        	return 2; //No se selecciona el archivo
+        	
+        }  catch (Exception eio) {
+        	System.out.println("error por formato archivo: "+ eio.toString());
+			return 0;//ha ocurrido otro error
+			
 		}
-		return 0;
 	}
 	
 	@DeleteMapping("/usuarios/{id}") // ruta del servicio desde el front deben direccionar a esta ruta

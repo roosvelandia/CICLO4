@@ -15,10 +15,13 @@ public class LectorCSV {
         this.separador = separador;
         this.comillas = comillas;   
     }
-    public List<Productos> LeerCSVSimple(String path) throws IOException{
-        BufferedReader bufferlectura = new BufferedReader(new FileReader(path));
+    public List<Productos> LeerCSVSimple(String path) throws IOException {
+    	
+    	List<Productos> productos = new ArrayList<>();
+    	
+    	BufferedReader bufferlectura = new BufferedReader(new FileReader(path));
         String linea = bufferlectura.readLine();
-        List<Productos> productos = new ArrayList<>();
+        //List<Productos> productos = new ArrayList<>();
         while(linea != null){
             String[] campos = linea.split(String.valueOf(this.separador));
             Productos pro = new Productos();
@@ -34,7 +37,9 @@ public class LectorCSV {
         }
         if (bufferlectura != null){
             bufferlectura.close();
-        }
+        
+        } 
+    	
         return productos;
     }
 	
